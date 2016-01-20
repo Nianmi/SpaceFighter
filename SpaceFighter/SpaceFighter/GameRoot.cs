@@ -7,15 +7,21 @@ namespace SpaceFighter
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class GameRoot : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public Game1()
+        public static GameRoot Instance { get; private set; }
+        public static Viewport Viewport { get { return Instance.GraphicsDevice.Viewport; } }
+        public static Vector2 ScreenSize { get { return new Vector2(Viewport.Width, Viewport.Height); } }
+
+        public GameRoot()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            Instance = this;
         }
 
         /// <summary>
@@ -29,6 +35,9 @@ namespace SpaceFighter
             // TODO: Add your initialization logic here
 
             base.Initialize();
+
+            EntityManager.Add(PlayerShip.Instance);
+            
         }
 
         /// <summary>
@@ -41,6 +50,7 @@ namespace SpaceFighter
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            Art.Load(Content);
         }
 
         /// <summary>
@@ -65,6 +75,9 @@ namespace SpaceFighter
             // TODO: Add your update logic here
 
             base.Update(gameTime);
+
+            Input.Update();
+            EntityManager.Update();
         }
 
         /// <summary>
@@ -78,6 +91,16 @@ namespace SpaceFighter
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
+
+            GraphicsDevice.Clear(Color.Black);
+
+            spriteBatch.Begin(SpriteSortMode.Texture, BlendState.Additive);
+            EntityManager.Draw(spriteBatch);
+
+            // draw the custom mouse cursor
+            spriteBatch.Draw(Art.Pointer, Input.MousePosition, Color.White);
+
+            spriteBatch.End();
         }
     }
 }

@@ -1,6 +1,6 @@
 # SpaceFighter
 
-This is a little game witch i am programming to lern C# XNA game making.
+This is a little game witch i am programming to lern C# MonoGame (XNA) game making.
 Dont expect to much.
 I am following this tutorial right now: http://gamedevelopment.tutsplus.com/series/cross-platform-vector-shooter-xna--gamedev-10559
 
