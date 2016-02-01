@@ -17,12 +17,17 @@ namespace SpaceFighter
         private int timeUntilStart = 60;
         public bool IsActive { get { return timeUntilStart <= 0; } }
 
+        public int PointValue { get; private set; }
+
         public Enemy(Texture2D image, Vector2 position)
         {
             this.image = image;
             Position = position;
             Radius = image.Width / 2f;
             color = Color.Transparent;
+
+            PointValue = 1;
+            Sound.Spawn.Play();
         }
 
         public override void Update()
@@ -47,6 +52,11 @@ namespace SpaceFighter
         public void WasShot()
         {
             IsExpired = true;
+
+            Sound.Explosion.Play(0.5f, rand.NextFloat(-0.2f, 0.2f), 0);
+
+            PlayerStatus.AddPoints(PointValue);
+            PlayerStatus.IncreaseMultiplier();
         }
 
         public void HandleCollision(Enemy other)
@@ -75,6 +85,7 @@ namespace SpaceFighter
         {
             var enemy = new Enemy(Art.Seeker, position);
             enemy.AddBehaviour(enemy.FollowPlayer());
+            enemy.PointValue = 2;
 
             return enemy;
         }
@@ -83,6 +94,8 @@ namespace SpaceFighter
         {
             var enemy = new Enemy(Art.Wanderer, position);
             enemy.AddBehaviour(enemy.MoveRandomly());
+            enemy.PointValue = 3;
+
             return enemy;
         }
         #endregion
