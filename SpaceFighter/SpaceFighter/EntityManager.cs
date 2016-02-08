@@ -17,6 +17,7 @@ namespace SpaceFighter
 		static List<Entity> entities = new List<Entity>();
 		static List<Bullet> bullets = new List<Bullet>();
         static List<Enemy> enemies = new List<Enemy>();
+        static List<EnemyBase> enemiesBases = new List<EnemyBase>();
 
         static bool isUpdating;
 		static List<Entity> addedEntities = new List<Entity>();
@@ -34,10 +35,13 @@ namespace SpaceFighter
 		private static void AddEntity(Entity entity)
 		{
 			entities.Add(entity);
-			if (entity is Bullet)
-				bullets.Add(entity as Bullet);
+            if (entity is Bullet)
+                bullets.Add(entity as Bullet);
             else if (entity is Enemy)
                 enemies.Add(entity as Enemy);
+            else if(entity is EnemyBase)
+                enemiesBases.Add(entity as EnemyBase);
+            
         }
 
 		public static void Update()
@@ -96,6 +100,21 @@ namespace SpaceFighter
                         bullets[j].IsExpired = true;
                     }
                 }
+
+            //hamdle collisions between bullets and enemyBase
+            for(int i = 0; i < enemiesBases.Count; i++)
+            {
+                for (int j = 0; j < bullets.Count; j++)
+                {
+                    if (IsColliding(enemiesBases[i], bullets[j]))
+                    {
+                        //damage no irgendwie ageh
+                        enemiesBases[i].WasShot(bullets[j].damage);
+                        bullets[j].IsExpired = true;
+                    }
+
+                }
+            }
 
             // handle collisions between the player and enemies
             for (int i = 0; i < enemies.Count; i++)

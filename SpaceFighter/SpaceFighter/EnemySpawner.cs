@@ -14,14 +14,14 @@ namespace SpaceFighter
 
         public static void Update()
         {
-            if (!PlayerShip.Instance.IsDead && EntityManager.Count < 200)
-            {
-                if (rand.Next((int)inverseSpawnChance) == 0)
-                    EntityManager.Add(Enemy.CreateSeeker(GetSpawnPosition()));
+            //if (!PlayerShip.Instance.IsDead && EntityManager.Count < 200)
+            //{
+            //    if (rand.Next((int)inverseSpawnChance) == 0)
+            //        EntityManager.Add(Enemy.CreateSeeker(GetSpawnPosition()));
 
-                if (rand.Next((int)inverseSpawnChance) == 0)
-                    EntityManager.Add(Enemy.CreateWanderer(GetSpawnPosition()));
-            }
+            //    if (rand.Next((int)inverseSpawnChance) == 0)
+            //        EntityManager.Add(Enemy.CreateWanderer(GetSpawnPosition()));
+            //}
 
             // slowly increase the spawn rate as time progresses
             if (inverseSpawnChance > 20)

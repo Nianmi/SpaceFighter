@@ -17,6 +17,9 @@ namespace SpaceFighter
         public static Viewport Viewport { get { return Instance.GraphicsDevice.Viewport; } }
         public static Vector2 ScreenSize { get { return new Vector2(Viewport.Width, Viewport.Height); } }
 
+        private static int screenHeight = 720;
+        private static int screenWidth = 1280;
+
         public static GameTime GameTime { get; private set; }
 
         public GameRoot()
@@ -40,9 +43,26 @@ namespace SpaceFighter
             base.Initialize();
 
             EntityManager.Add(PlayerShip.Instance);
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(Sound.Music);
-            
+
+            //debug bases 
+            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 240.0f)));
+            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 300.0f)));
+            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 350.0f)));
+            EntityManager.Add(EnemyBase.CraateBase(new Vector2(450.0f, 240.0f)));
+            EntityManager.Add(EnemyBase.CraateBase(new Vector2(500.0f, 240.0f)));
+            EntityManager.Add(EnemyBase.CraateBase(new Vector2(550.0f, 240.0f)));
+            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 400.0f)));
+            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 450.0f)));
+            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 500.0f)));
+            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 550.0f)));
+            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 600.0f)));
+
+            //MediaPlayer.IsRepeating = true;
+            //MediaPlayer.Play(Sound.Music);
+
+            graphics.PreferredBackBufferHeight = screenHeight;
+            graphics.PreferredBackBufferWidth = screenWidth;
+            graphics.ApplyChanges();
         }
 
         /// <summary>
