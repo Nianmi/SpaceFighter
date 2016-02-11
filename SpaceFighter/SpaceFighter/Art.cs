@@ -23,6 +23,8 @@ namespace SpaceFighter
 
         public static SpriteFont Font { get; private set; }
 
+        public static Texture2D MapSet1 { get; private set; }
+
 
 
 
@@ -36,6 +38,8 @@ namespace SpaceFighter
 			Pointer = content.Load<Texture2D>("Art/Pointer");
 
             Font = content.Load<SpriteFont>("Fonts/Font");
+
+            MapSet1 = content.Load<Texture2D>("Art/MapSheet");
         }
 	}
 }

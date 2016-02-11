@@ -30,7 +30,8 @@ namespace SpaceFighter
 
         public override void Update()
         {
-            if (!PlayerShip.Instance.IsDead && EntityManager.Count < 200)
+            //&& EntityManager.Count < 200
+            if (!PlayerShip.Instance.IsDead)
             {
                 if (rand.Next((int)inverseSpawnChance) == 0)
                     EntityManager.Add(Enemy.CreateSeeker(this.Position));
@@ -38,7 +39,6 @@ namespace SpaceFighter
                 if (rand.Next((int)inverseSpawnChance) == 0)
                     EntityManager.Add(Enemy.CreateWanderer(this.Position));
             }
-
         }
 
         public void WasShot(int damage)

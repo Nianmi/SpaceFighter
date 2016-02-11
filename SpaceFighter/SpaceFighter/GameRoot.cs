@@ -45,17 +45,7 @@ namespace SpaceFighter
             EntityManager.Add(PlayerShip.Instance);
 
             //debug bases 
-            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 240.0f)));
-            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 300.0f)));
-            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 350.0f)));
-            EntityManager.Add(EnemyBase.CraateBase(new Vector2(450.0f, 240.0f)));
-            EntityManager.Add(EnemyBase.CraateBase(new Vector2(500.0f, 240.0f)));
-            EntityManager.Add(EnemyBase.CraateBase(new Vector2(550.0f, 240.0f)));
-            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 400.0f)));
-            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 450.0f)));
-            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 500.0f)));
-            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 550.0f)));
-            EntityManager.Add(EnemyBase.CraateBase(new Vector2(400.0f, 600.0f)));
+            LevelReader.readLevelData();
 
             //MediaPlayer.IsRepeating = true;
             //MediaPlayer.Play(Sound.Music);
@@ -134,6 +124,7 @@ namespace SpaceFighter
             spriteBatch.DrawString(Art.Font, "Lives: " + PlayerStatus.Lives, new Vector2(5), Color.White);
             DrawRightAlignedString("Score: " + PlayerStatus.Score, 5);
             DrawRightAlignedString("Multiplier: " + PlayerStatus.Multiplier, 35);
+            
 
             if (PlayerStatus.IsGameOver)
             {

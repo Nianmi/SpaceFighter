@@ -48,6 +48,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="GameRoot.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="LevelReader.cs" />
     <Compile Include="MathUtil.cs" />
     <Compile Include="PlayerShip.cs" />
     <Compile Include="PlayerStatus.cs" />
