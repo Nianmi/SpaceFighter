@@ -14,6 +14,8 @@ namespace SpaceFighter
 {
 	class Bullet : Entity
 	{
+        public int damage { get; private set;}
+
 		public Bullet(Vector2 position, Vector2 velocity)
 		{
 			image = Art.Bullet;
@@ -21,6 +23,8 @@ namespace SpaceFighter
 			Velocity = velocity;
 			Orientation = Velocity.ToAngle();
 			Radius = 8;
+
+            damage = 10;
 		}
 
 		public override void Update()

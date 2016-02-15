@@ -17,6 +17,9 @@ namespace SpaceFighter
         public static Viewport Viewport { get { return Instance.GraphicsDevice.Viewport; } }
         public static Vector2 ScreenSize { get { return new Vector2(Viewport.Width, Viewport.Height); } }
 
+        private static int screenHeight = 720;
+        private static int screenWidth = 1280;
+
         public static GameTime GameTime { get; private set; }
 
         public GameRoot()
@@ -40,9 +43,16 @@ namespace SpaceFighter
             base.Initialize();
 
             EntityManager.Add(PlayerShip.Instance);
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(Sound.Music);
-            
+
+            //debug bases 
+            LevelReader.readLevelData();
+
+            //MediaPlayer.IsRepeating = true;
+            //MediaPlayer.Play(Sound.Music);
+
+            graphics.PreferredBackBufferHeight = screenHeight;
+            graphics.PreferredBackBufferWidth = screenWidth;
+            graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -114,6 +124,7 @@ namespace SpaceFighter
             spriteBatch.DrawString(Art.Font, "Lives: " + PlayerStatus.Lives, new Vector2(5), Color.White);
             DrawRightAlignedString("Score: " + PlayerStatus.Score, 5);
             DrawRightAlignedString("Multiplier: " + PlayerStatus.Multiplier, 35);
+            
 
             if (PlayerStatus.IsGameOver)
             {

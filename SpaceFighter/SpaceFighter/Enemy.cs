@@ -27,7 +27,7 @@ namespace SpaceFighter
             color = Color.Transparent;
 
             PointValue = 1;
-            Sound.Spawn.Play();
+            //Sound.Spawn.Play();
         }
 
         public override void Update()
@@ -53,7 +53,7 @@ namespace SpaceFighter
         {
             IsExpired = true;
 
-            Sound.Explosion.Play(0.5f, rand.NextFloat(-0.2f, 0.2f), 0);
+            //Sound.Explosion.Play(0.5f, rand.NextFloat(-0.2f, 0.2f), 0);
 
             PlayerStatus.AddPoints(PointValue);
             PlayerStatus.IncreaseMultiplier();
