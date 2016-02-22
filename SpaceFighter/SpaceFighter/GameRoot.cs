@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-using SpaceFighter.Screens;
-
 namespace SpaceFighter
 {
     /// <summary>
@@ -18,6 +16,9 @@ namespace SpaceFighter
         public static GameRoot Instance { get; private set; }
         public static Viewport Viewport { get { return Instance.GraphicsDevice.Viewport; } }
         public static Vector2 ScreenSize { get { return new Vector2(Viewport.Width, Viewport.Height); } }
+
+        private static int screenHeight = 720;
+        private static int screenWidth = 1280;
 
         public static GameTime GameTime { get; private set; }
 
@@ -39,23 +40,19 @@ namespace SpaceFighter
         {
             // TODO: Add your initialization logic here
 
-            graphics.PreferredBackBufferHeight = (int)ScreenManager.Instance.Dimensions.Y;
-            graphics.PreferredBackBufferWidth = (int)ScreenManager.Instance.Dimensions.X;
-            graphics.ApplyChanges();
+            base.Initialize();
 
-            //ScreenManager.Instance.Initialize();
-            //  EntityManager.Add(PlayerShip.Instance);
+            EntityManager.Add(PlayerShip.Instance);
 
             //debug bases 
-            //LevelReader.readLevelData();
+            LevelReader.readLevelData();
 
-            Art.Load(Content);
-            Sound.Load(Content);
+            //MediaPlayer.IsRepeating = true;
+            //MediaPlayer.Play(Sound.Music);
 
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(Sound.Music);
-
-            base.Initialize();
+            graphics.PreferredBackBufferHeight = screenHeight;
+            graphics.PreferredBackBufferWidth = screenWidth;
+            graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -68,16 +65,8 @@ namespace SpaceFighter
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-
             Art.Load(Content);
             Sound.Load(Content);
-
-            ScreenManager.Instance.GraphicsDevice = GraphicsDevice;
-            ScreenManager.Instance.SpriteBatch = spriteBatch;
-            ScreenManager.Instance.LoadContent(Content);
-
-            //Art.Load(Content);
-            //Sound.Load(Content);
         }
 
         /// <summary>
@@ -87,7 +76,6 @@ namespace SpaceFighter
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-            ScreenManager.Instance.UnloadContent();
         }
 
         /// <summary>
@@ -105,14 +93,12 @@ namespace SpaceFighter
 
             // TODO: Add your update logic here
 
-            ScreenManager.Instance.Update(gameTime);
-
-            //Input.Update();
-            //EntityManager.Update();
-            //EnemySpawner.Update();
-            //PlayerStatus.Update();
-
             base.Update(gameTime);
+
+            Input.Update();
+            EntityManager.Update();
+            EnemySpawner.Update();
+            PlayerStatus.Update();
         }
 
         /// <summary>
@@ -121,51 +107,46 @@ namespace SpaceFighter
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            // Clear the backbufferG
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
 
-            spriteBatch.Begin();
-            ScreenManager.Instance.Draw(spriteBatch);
+            base.Draw(gameTime);
+
+            GraphicsDevice.Clear(Color.Black);
+
+            spriteBatch.Begin(SpriteSortMode.Texture, BlendState.Additive);
+            EntityManager.Draw(spriteBatch);
             spriteBatch.End();
 
-            //    GraphicsDevice.Clear(Color.Black);
+            spriteBatch.Begin(0, BlendState.Additive);
 
-            //    spriteBatch.Begin(SpriteSortMode.Texture, BlendState.Additive);
-            //    EntityManager.Draw(spriteBatch);
-            //    spriteBatch.End();
+            spriteBatch.DrawString(Art.Font, "Lives: " + PlayerStatus.Lives, new Vector2(5), Color.White);
+            DrawRightAlignedString("Score: " + PlayerStatus.Score, 5);
+            DrawRightAlignedString("Multiplier: " + PlayerStatus.Multiplier, 35);
+            
 
-            //    spriteBatch.Begin(0, BlendState.Additive);
+            if (PlayerStatus.IsGameOver)
+            {
+                string text = "Game Over\n" +
+                    "Your Score: " + PlayerStatus.Score + "\n" +
+                    "High Score: " + PlayerStatus.HighScore;
 
-            //    spriteBatch.DrawString(Art.Font, "Lives: " + PlayerStatus.Lives, new Vector2(5), Color.White);
-            //    DrawRightAlignedString("Score: " + PlayerStatus.Score, 5);
-            //    DrawRightAlignedString("Multiplier: " + PlayerStatus.Multiplier, 35);
+                Vector2 textSize = Art.Font.MeasureString(text);
+                spriteBatch.DrawString(Art.Font, text, ScreenSize / 2 - textSize / 2, Color.White);
+            }
 
+            // draw the custom mouse cursor
+            spriteBatch.Draw(Art.Pointer, Input.MousePosition, Color.White);
 
-            //    if (PlayerStatus.IsGameOver)
-            //    {
-            //        string text = "Game Over\n" +
-            //            "Your Score: " + PlayerStatus.Score + "\n" +
-            //            "High Score: " + PlayerStatus.HighScore;
-
-            //        Vector2 textSize = Art.Font.MeasureString(text);
-            //        spriteBatch.DrawString(Art.Font, text, ScreenSize / 2 - textSize / 2, Color.White);
-            //    }
-
-            //    // draw the custom mouse cursor
-            //    spriteBatch.Draw(Art.Pointer, Input.MousePosition, Color.White);
-
-            //    spriteBatch.End();
-            //}
-
-            //private void DrawRightAlignedString(string text, float y)
-            //{
-            //    var textWidth = Art.Font.MeasureString(text).X;
-            //    spriteBatch.DrawString(Art.Font, text, new Vector2(ScreenSize.X - textWidth - 5, y), Color.White);
-
-
-            base.Draw(gameTime);
+            spriteBatch.End();
         }
+
+        private void DrawRightAlignedString(string text, float y)
+        {
+            var textWidth = Art.Font.MeasureString(text).X;
+            spriteBatch.DrawString(Art.Font, text, new Vector2(ScreenSize.X - textWidth - 5, y), Color.White);
+        }
+
     }
-    }
+}
