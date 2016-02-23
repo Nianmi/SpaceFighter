@@ -13,7 +13,7 @@ namespace SpaceFighter
         static public void readLevelData()
         {
             Texture2D map = Art.MapSet1;
-            Color[] colors1D = new Color[128*72];
+            Color[] colors1D = new Color[128 * 72];
             Rectangle rect = new Rectangle(128, 144, 128, 72);
             map.GetData<Color>(0, rect, colors1D, 0, colors1D.Length);
 
@@ -43,15 +43,4 @@ namespace SpaceFighter
             }
         }
     }
-
-    public class level
-    {
-        public List<Vector2> levelsCoordinates = new List<Vector2>();
-
-        public level()
-        {
-            
-        }
-    }
-
 }

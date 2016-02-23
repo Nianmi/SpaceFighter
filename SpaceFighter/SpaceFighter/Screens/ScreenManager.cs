@@ -18,13 +18,13 @@ namespace SpaceFighter.Screens
         public GraphicsDevice GraphicsDevice;
         public SpriteBatch SpriteBatch;
 
-        GameScreen currentScreen;
+        GameScreen currentScreen, newScreen;
 
         public static ScreenManager Instance
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     instance = new ScreenManager();
                 }
@@ -33,10 +33,19 @@ namespace SpaceFighter.Screens
         }
 
         private ScreenManager()
-       {
+        {
             Dimensions = new Vector2(1280, 720);
             currentScreen = new SplashScreen();
-       }
+        }
+
+        public void changeScreens(string screenName)
+        {
+            newScreen = (GameScreen)Activator.CreateInstance(Type.GetType("SpaceFighter.Screens." + screenName));
+            currentScreen.UnloadContent();
+            currentScreen = newScreen;
+            currentScreen.Initialize();
+            currentScreen.LoadContent();
+        }
 
         public void Initialize()
         {
@@ -45,7 +54,11 @@ namespace SpaceFighter.Screens
 
         public void LoadContent(ContentManager Content)
         {
-            this.Content = Content;
+            this.Content = new ContentManager(Content.ServiceProvider, "Content");
+
+            Art.Load(Content);
+            Sound.Load(Content);
+
             currentScreen.LoadContent();
         }
 

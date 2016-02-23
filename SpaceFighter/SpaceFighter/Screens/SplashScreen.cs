@@ -10,45 +10,48 @@ namespace SpaceFighter.Screens
 {
     class SplashScreen : GameScreen
     {
-        Texture2D text;
+        private bool wasKeyPressed = false;
 
         public override void Initialize()
         {
-            
             base.Initialize();
+
+            //TODO: Add your Initialize logic here
         }
 
         public override void LoadContent()
         {
-            EntityManager.Add(PlayerShip.Instance);
-            text = Art.Wanderer;
             base.LoadContent();
+
+            // TODO: Add your LoadContent logic here
         }
 
         public override void UnloadContent()
         {
             base.UnloadContent();
+
+            // TODO: Add your UnloadContent logic here
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            wasKeyPressed = Input.wasAnyKeyPressed();
+            // TODO: Add your update logic here
+            if (wasKeyPressed == true)
+            {
+                ScreenManager.Instance.changeScreens("PlayScreen");
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            
-            Color col = Color.White;
-            Vector2 vec = new Vector2(5.0f, 5.0f);
+            base.Draw(spriteBatch);
 
-            spriteBatch.Draw(text, vec, col);
-
-
-            //    spriteBatch.Begin(SpriteSortMode.Texture, BlendState.Additive);
-            EntityManager.Draw(spriteBatch);
-            //    spriteBatch.End();
+            // TODO: Add your Draw logic here
+            spriteBatch.Begin(0, BlendState.Additive);
+            drawCentertAlignedString("Press Any Key To Continue", Color.White);
+            spriteBatch.End();
         }
-
-
     }
 }
