@@ -63,6 +63,13 @@ namespace SpaceFighter
 			entities = entities.Where(x => !x.IsExpired).ToList();
 			bullets = bullets.Where(x => !x.IsExpired).ToList();
             enemies = enemies.Where(x => !x.IsExpired).ToList();
+            enemiesBases = enemiesBases.Where(x => !x.IsExpired).ToList();
+
+            if (!enemies.Any() && !enemiesBases.Any())
+            {
+                LevelManager.levelNummer += 1;
+                LevelManager.loadLevel();
+            }
         }
 
         private static bool IsColliding(Entity a, Entity b)

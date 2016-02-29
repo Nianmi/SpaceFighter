@@ -17,7 +17,6 @@ namespace SpaceFighter.Screens
 
             //TODO: Add your Initialize logic here
             EntityManager.Add(PlayerShip.Instance);
-            LevelReader.readLevelData();
         }
 
 

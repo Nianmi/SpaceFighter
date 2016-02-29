@@ -40,6 +40,8 @@ namespace SpaceFighter.Screens
             // TODO: Add your update logic here
             if (wasKeyPressed == true)
             {
+                LevelManager.levelNummer = 1;
+                LevelManager.loadLevel();
                 ScreenManager.Instance.changeScreens("PlayScreen");
             }
         }

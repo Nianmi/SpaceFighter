@@ -59,7 +59,7 @@ namespace SpaceFighter
 
         public static EnemyBase CraateBase(Vector2 position)
         {
-            var Base = new EnemyBase(Art.Wanderer, position);
+            var Base = new EnemyBase(Art.Base, position);
 
             return Base;
         }
